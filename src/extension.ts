@@ -2,7 +2,7 @@ import path from "path";
 import * as vscode from "vscode";
 import { BladeFormatter, BladeFormatterOption } from "blade-formatter";
 
-const CONFIG_NAMESPACE = "bladeFormatter";
+const CONFIG_NAMESPACE = "bfOnly";
 
 export function activate(context: vscode.ExtensionContext): void {
   const disposable = vscode.languages.registerDocumentFormattingEditProvider("blade", {
