@@ -1,6 +1,10 @@
 import path from "path";
 import * as vscode from "vscode";
-import { BladeFormatter, BladeFormatterOption } from "blade-formatter";
+import type { BladeFormatterOption } from "blade-formatter";
+
+// Use the CJS bundle to avoid pulling in the ESM build (which relies on import.meta.url).
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { BladeFormatter } = require("blade-formatter/dist/bundle.cjs") as typeof import("blade-formatter");
 
 const CONFIG_NAMESPACE = "bfOnly";
 

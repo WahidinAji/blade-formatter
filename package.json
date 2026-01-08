@@ -1,24 +1,33 @@
 {
   "name": "bf-only",
   "displayName": "BF stands for Blade Formatter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "VS Code formatter extension that keeps Laravel Blade templates tidy using blade-formatter",
   "publisher": "a17wahidin",
   "repository": "https://github.com/WahidinAji/blade-formatter",
   "license": "MIT",
-  "engines": {"vscode": "^1.80.0"},
-  "categories": ["Formatters"],
-  "activationEvents": ["onLanguage:blade"],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:blade"
+  ],
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p .",
-    "watch": "tsc -watch -p .",
+    "compile": "npm run typecheck && npm run bundle",
+    "bundle": "node ./scripts/build.js",
+    "typecheck": "tsc -p . --noEmit",
+    "watch": "npm run bundle -- --watch",
     "test": "npm run compile"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/vscode": "^1.80.0",
+    "esbuild": "^0.27.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -42,7 +51,15 @@
         },
         "bfOnly.wrapAttributes": {
           "type": "string",
-          "enum": ["auto", "force", "force-aligned", "force-expand-multiline", "aligned-multiple", "preserve", "preserve-aligned"],
+          "enum": [
+            "auto",
+            "force",
+            "force-aligned",
+            "force-expand-multiline",
+            "aligned-multiple",
+            "preserve",
+            "preserve-aligned"
+          ],
           "default": "auto",
           "description": "Control how HTML attributes in Blade templates are wrapped."
         },
@@ -64,7 +81,10 @@
         },
         "bfOnly.endOfLine": {
           "type": "string",
-          "enum": ["LF", "CRLF"],
+          "enum": [
+            "LF",
+            "CRLF"
+          ],
           "default": "LF",
           "description": "End-of-line character to use when formatting."
         },
@@ -85,13 +105,22 @@
         },
         "bfOnly.sortHtmlAttributes": {
           "type": "string",
-          "enum": ["none", "alphabetical", "code-guide", "idiomatic", "vuejs", "custom"],
+          "enum": [
+            "none",
+            "alphabetical",
+            "code-guide",
+            "idiomatic",
+            "vuejs",
+            "custom"
+          ],
           "default": "none",
           "description": "Sort HTML attributes according to a strategy."
         },
         "bfOnly.customHtmlAttributesOrder": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Custom attribute order used when sortHtmlAttributes is set to custom."
         },
@@ -117,14 +146,25 @@
         },
         "bfOnly.extraLiners": {
           "type": "array",
-          "items": {"type": "string"},
-          "default": ["head", "body", "/html"],
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "head",
+            "body",
+            "/html"
+          ],
           "description": "Tags that should have an extra blank line before them."
         },
         "bfOnly.componentPrefix": {
           "type": "array",
-          "items": {"type": "string"},
-          "default": ["x-", "livewire:"],
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "x-",
+            "livewire:"
+          ],
           "description": "Prefixes for Blade components that follow a different formatting style."
         },
         "bfOnly.phpVersion": {

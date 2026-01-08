@@ -10,7 +10,8 @@
     "moduleResolution": "node", //if doesn't work, try node
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"]

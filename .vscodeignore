@@ -1,5 +1,11 @@
 node_modules
+!out/node_modules/**
 src
 README.md
 **/.DS_Store
 **/*.map
+.vscode
+.git
+*.vsix
+tsconfig.json
+.gitignore

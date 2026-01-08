@@ -56,7 +56,7 @@ Use the built-in settings UI (`Preferences: Open Settings (UI)`) and search for 
 npm install
 npm run compile
 npx @vscode/vsce package
-code --install-extension ./blade-format-only-0.0.1.vsix
+code --install-extension ./bf-only-0.0.3.vsix
 ```
 
 Or run in dev mode: `code --extensionDevelopmentPath=/path/to/repo`.
@@ -76,26 +76,18 @@ npm install
 npm run compile
 ```
 
-For iterative development, run `npm run watch` and reload the extension host from the VS Code debug panel.
+For iterative development, run `npm run watch` (esbuild watch mode) and reload the extension host from the VS Code debug panel.
 
+## Test locally
 
-## Publish
+* From the repo root, install deps and build: `npm install` then `npm run compile` (type-checks, bundles, and copies runtime assets).
+* Package it: `npx @vscode/vsce package` (creates `bf-only-<version>.vsix` in the root).
+* Install into VS Code: `code --install-extension ./bf-only-<version>.vsix` or use “Extensions: Install from VSIX...”.
+* Reload VS Code, open a `.blade.php` file, and run Format Document (or enable `editor.formatOnSave` for Blade).
 
-* Prereqs: You need an Azure DevOps account + VS Code Marketplace publisher. Create one at https://aka.ms/vscode-create-publisher and note the publisher name (e.g., wahidinaji).
-* Token: In Azure DevOps, create a Personal Access Token with Marketplace (Publish) + Packaging (Read & write) scopes. Keep the token handy.
-* Install vsce: npm install -g @vscode/vsce (or use npx @vscode/vsce ... per command).
-* Login: vsce login <publisher> then paste your PAT.
-* Version bump: Update version in package.json (e.g., 0.0.2). Marketplace requires semantic version bumps.
-* Package: From the repo root: npm run compile then vsce package (creates a .vsix locally—optional if you publish directly).
-* Publish: vsce publish (or vsce publish <patch|minor|major> to bump and publish in one step). Example: vsce publish patch.
-* Test locally first (optional): code --install-extension ./blade-format-only-0.0.2.vsix.
+## Build notes
 
-## Test Locally
-
-* From the repo root, install deps and build: npm install then npm run compile.
-* Package it: npx @vscode/vsce package (this creates blade-format-only-0.0.1.vsix in the root).
-* Install into VS Code: either run code --install-extension ./blade-format-only-0.0.1.vsix or open the Command Palette → “Extensions: Install from VSIX...” and pick the file.
-* Reload VS Code, open a .blade.php file, and run Format Document (or enable editor.formatOnSave for Blade).
+- `npm run compile` bundles the extension with esbuild so only `out/` plus a small `syntaxes/` folder and the `vscode-oniguruma` wasm asset are shipped—no full `node_modules` in the VSIX.
+- The formatter uses the CJS build of `blade-formatter` to stay compatible with VS Code’s Node runtime.
 
 ## License
-
