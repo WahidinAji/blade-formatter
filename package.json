@@ -1,7 +1,7 @@
 {
   "name": "bf-only",
   "displayName": "BF stands for Blade Formatter",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "VS Code formatter extension that keeps Laravel Blade templates tidy using blade-formatter",
   "publisher": "a17wahidin",
   "repository": "https://github.com/WahidinAji/blade-formatter",

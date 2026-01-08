@@ -59,7 +59,7 @@ npx @vscode/vsce package
 code --install-extension ./bf-only-0.0.3.vsix
 ```
 
-Or run in dev mode: `code --extensionDevelopmentPath=/path/to/repo`.
+Or run in dev mode: `code --extensionDevelopmentPath=${pwd}`.
 
 ## Publish
 

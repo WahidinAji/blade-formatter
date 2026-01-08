@@ -23,7 +23,7 @@ async function bundle() {
     bundle: true,
     format: "cjs",
     platform: "node",
-    external: ["vscode", "vscode-oniguruma", "vscode-oniguruma/release/onig.wasm"],
+    external: ["vscode", "vscode-oniguruma", "vscode-oniguruma/release/onig.wasm", "blade-formatter"],
     sourcemap: true,
     target: "node18",
     treeShaking: true
@@ -66,9 +66,33 @@ async function copyRuntimeAssets() {
   await Promise.all([copyFile(wasmSource, wasmDest), copyFile(bladeGrammarSource, bladeGrammarDest)]);
 }
 
+async function copyBladeFormatter() {
+  const source = path.join(rootDir, "node_modules", "blade-formatter");
+  const dest = path.join(outDir, "node_modules", "blade-formatter");
+  
+  await copyDir(source, dest);
+}
+
+async function copyDir(source, dest) {
+  await fs.mkdir(dest, { recursive: true });
+  const entries = await fs.readdir(source, { withFileTypes: true });
+  
+  for (const entry of entries) {
+    const srcPath = path.join(source, entry.name);
+    const destPath = path.join(dest, entry.name);
+    
+    if (entry.isDirectory()) {
+      await copyDir(srcPath, destPath);
+    } else {
+      await fs.copyFile(srcPath, destPath);
+    }
+  }
+}
+
 async function main() {
   await bundle();
   await copyRuntimeAssets();
+  await copyBladeFormatter();
 }
 
 main().catch((error) => {
